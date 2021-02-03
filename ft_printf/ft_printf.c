@@ -1,131 +1,127 @@
-#include <unistd.h>
-#include <stdarg.h>
 #include <stdio.h>
-
-int ft_strlen(char *s)
+#include <stdarg.h>
+#include <unistd.h>
+​
+size_t	ft_strlen(char *s)
 {
-    int i;
-
-    i = 0;
-    while (s[i])
-        i++;
-    retornourn (i);
+	size_t	len;
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
 }
-
-int ft_nbrlen(long long num, int base)
+​
+int		ft_counter(long long num, int base_len)
 {
-    int i;
-
-    i = 1;
-    while (num >= base)
-    {
-        num /= base;
-        i++;
-    }
-    retornourn (i);
+	int		ct;
+​
+	ct = 1;
+	while (num >= base_len || num <= -base_len)
+	{
+		num = num / base_len;
+		ct++;
+	}
+	return (ct);
 }
-
-void    ft_putnbr_base(long long num, int base, char *base_str)
+​
+void	ft_putnum(long long num, int base_len, char *base)
 {
-    if (num >= base)
-        ft_putnbr_base(num/base, base, base_str);
-    write(1, &base_str[num % base], 1);
+	if (num >= base_len)
+		ft_putnum(num / base_len, base_len, base);
+	write(1, &base[num % base_len], 1);
 }
-
-int ft_printf(char *format, ...)
+​
+int		ft_printf(char	*fromat, ...)
 {
-    va_list list;
-    char *s, *base_str;
-    long    num;
-    int retorno=0, pos=0, base, width, punto, punto_val, espacio, zero, negativo, contador;
-
-    if (!format)
-        retornourn (-1);
-    va_start(list, format);
-    while (format[pos])
-    {
-        if (format[pos] == '%')
-        {
-            base=0, width=0, punto=0, punto_val=0, espacio=0, zero=0, negativo=0, contador=0;
-            pos++;
-            while (format[pos] >= '0' && format[pos] <= '9')
-            {
-                width *= 10 + (format[pos] - 48);
-                pos++;
-            }
-            if (format[pos] == '.')
-            {
-                punto = 1;
-                pos++;
-                while (format[pos] >= '0' && format[pos] <= '9')
-                {
-                    punto_val *= 10 + (format[pos] - 48);
-                    pos++;
-                }
-            }
-            if (format[pos] == 's')
-            {
-                s = va_arg(list, char*);
-                if (!s)
-                    s = "(null)";
-                contador = ft_strlen(s);
-            }
-            else if (format[pos] == 'x')
-            {
-                num = va_arg(list, unsigned int);
-                base = 16;
-                base_str = "0123456789abcdef";
-                contador = ft_nbrlen(num, base);
-            }
-            else if (format[pos] == 'd')
-            {
-                num = va_arg(list, int);
-                if (num < '0')
-                {
-                    num = -num;
-                    negativo = 1;
-                }
-                base = 10;
-                base_str = "0123456789";
-                contador = ft_nbrlen(num, base);
-            }
-            if (punto && punto_val > contador && format[pos] != 's')
-                zero = punto_val - contador;
-            if (punto && punto_val < contador && format[pos] == 's')
-                contador = punto_val;
-            if (punto && !punto_val && (format[pos] == 's' || !num))
-                contador = 0;
-            espacio = width - contador - zero - negativo;
-            while (espacio > 0)
-            {
-                write(1, " ", 1);
-                retorno++;
-                espacio--;
-            }
-            if (negativo == 1)
-            {
-                write(1, "-", 1);
-                retorno++;
-            }
-            while (zero > 0)
-            {
-                write(1, "0", 1);
-                retorno++;
-                zero--;
-            }
-            if (format[pos] == 's')
-                write(1, s, contador);
-            else if (contador)
-                ft_putnbr_base(num, base, base_str);
-            retorno += contador;
-        }
-        else
-        {
-            write(1, &format[pos], 1);
-            retorno++;
-        }
-        pos++;
-    }
-    va_end(lis);
-    retornourn (retorno);
+	va_list	lst;
+	char	*s, *base;
+	long	num;
+	int		pos = 0, ct = 0, neg = 0, zero = 0, space = 0, width = 0, precision = 0, p_range = 0, ret = 0, base_len = 0;
+​
+	va_start(lst, fromat);
+	while (fromat[pos])
+	{
+		if (fromat[pos] == '%')
+		{
+			pos++;
+			ct = 0, neg = 0, zero = 0, space = 0, width = 0, precision = 0, p_range = 0;
+			while (fromat[pos] >= '0' && fromat[pos] <= '9')
+			{
+				width = width * 10 + (fromat[pos] - 48);
+				pos++;
+			}
+			if (fromat[pos] == '.')
+			{
+				pos++;
+				precision = 1;
+				while (fromat[pos] >= '0' && fromat[pos] <= '9')
+				{
+					p_range = p_range * 10 + (fromat[pos] - 48);
+					pos++;
+				}
+			}
+			if (fromat[pos] == 's')
+			{
+				s = va_arg(lst, char *);
+				if (!s)
+					s = "(null)";
+				ct = ft_strlen(s);
+			}
+			else if (fromat[pos] == 'x')
+			{
+				num = va_arg(lst, unsigned int);
+				base = "0123456789abcdef";
+				base_len = 16;
+				ct = ft_counter(num, base_len);
+			}
+			else if (fromat[pos] == 'd')
+			{
+				num = va_arg(lst, int);
+				base = "0123456789";
+				base_len = 10;
+				ct = ft_counter(num, base_len);
+				if (num < 0)
+				{
+					num = -num;
+					neg = 1;
+				}
+			}
+			if (precision && p_range > ct && fromat[pos] != 's')
+				zero = p_range - ct;
+			if (precision && p_range < ct && fromat[pos] == 's')
+				ct = p_range;
+			if (precision && !p_range && (fromat[pos] == 's' || !num))
+				ct = 0;
+			space = width - zero - ct - neg;
+			while (space-- > 0)
+			{
+				write(1, " ", 1);
+				ret++;
+			}
+			if (neg)
+			{
+				write(1, "-", 1);
+				ret++;
+			}
+			while (zero-- > 0)
+			{
+				write(1, "0", 1);
+				ret++;
+			}
+			if (fromat[pos] == 's')
+				write(1, s, ct);
+			else if (ct)
+				ft_putnum(num, base_len, base);
+			ret += ct;
+			pos++;
+		}
+		else
+		{
+			write(1, &fromat[pos], 1);
+			ret++;
+			pos++;
+		}
+	}
+	va_end(lst);
+	return (ret);
 }
