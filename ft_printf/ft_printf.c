@@ -1,4 +1,4 @@
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <unistd.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -131,7 +131,7 @@ int		ft_printf(char	*fromat, ...)
 	va_end(lst);
 	return (ret);
 }
-
+/*
 int
 	main(void)
 {
@@ -218,3 +218,4 @@ int
 	F("s4w10p ~%10.10s` ~%10.10s` ~%10.10s` ~%10.10s` ~%10.10s`\n", "", "toto", "0123456789", "tjehurthteutuiehteute", NULL);
 	printf("written: %d\n", r);
 }
+*/

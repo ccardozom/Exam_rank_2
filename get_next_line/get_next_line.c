@@ -66,16 +66,15 @@ int		get_next_line(char **line)
 	char		buff[513];
 	char		*temp, *temp2;
 	int			bt;
-
 	if (!line)
 		return (-1);
 	while (ft_strchr(gnl, '\n') == NULL)
 	{
-		bt = read(0, buff, 512)
+		bt = read(0, buff, 512);
 		if (bt < 0)
-			return (-1)
+			return (-1);
 		else if (!bt)
-			break:
+			break ;
 		buff[bt] = 0;
 		if (!gnl)
 			gnl = ft_strdup(buff);
@@ -87,6 +86,11 @@ int		get_next_line(char **line)
 		}
 	}
 	if (!bt && !gnl)
+	{
+		*line = ft_strdup("");
+		return (0);
+	}
+	else if (!bt)
 	{
 		*line = ft_strdup("");
 		return (0);
