@@ -1,6 +1,6 @@
 #include <unistd.h>
 
-int main (argc, **argv)
+int main (int argc,char **argv)
 {
     int used[255];
     int i,j;
@@ -11,7 +11,7 @@ int main (argc, **argv)
         if (i < 255)
             used[i++] = 0;
         i = 2;
-        while (i < 2)
+        while (i > 0 )
         {
             j = 0;
             while (argv[i][j])

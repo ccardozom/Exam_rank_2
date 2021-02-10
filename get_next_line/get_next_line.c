@@ -48,7 +48,7 @@ char	*ft_strdup(char *s)
 	int		pos;
 	char	*dup;
 
-	if (!(dup = malloc(ft_strlen(s) + 1))
+	if (!(dup = malloc(ft_strlen(s) + 1)))
 		return (NULL);
 	pos = 0;
 	while (s[pos])
