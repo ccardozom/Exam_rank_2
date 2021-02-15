@@ -5,24 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) Iniciar",
+            "name": "(lldb) Iniciar",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/inter/intercopy.exe",
-            "args": ["zpadinton", "paqefwtdjetyiytjneytjoeyjnejeyj"],
+            "program": "/Users/ccardozo/Documents/libasm/main",
+            "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe",
-            "setupCommands": [
-                {
-                    "description": "Habilitar la impresión con sangría para gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
-        },
+            "console": "externalTerminal",
+            "MIMode": "lldb"
+        }
     ]
 }

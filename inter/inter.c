@@ -1,27 +1,25 @@
 #include <unistd.h>
 
-int	main(int argc, char **argv)
+int main (int argc, char **argv)
 {
-	int	used[255];
-	int	i, j;
+	int i=0,j=0,s[255];
 
 	if (argc == 3)
 	{
-		i = 0;
 		while (i < 255)
-			used[i++] = 0;
+			s[i++] = 0;
 		i = 2;
 		while (i > 0)
 		{
 			j = 0;
 			while (argv[i][j])
 			{
-				if (i == 2 && !used[(unsigned char)argv[i][j]])
-					used[(unsigned char)argv[i][j]] = 1;
-				else if (i == 1 && used[(unsigned char)argv[i][j]] == 1)
+				if (i == 2 && !s[(unsigned char)argv[i][j]])
+					s[(unsigned char)argv[i][j]] = 1;
+				else if (i == 1 && s[(unsigned char)argv[i][j]] == 1)
 				{
+					s[(unsigned char)argv[i][j]] = 2;
 					write(1, &argv[i][j], 1);
-					used[(unsigned char)argv[i][j]] = 2;
 				}
 				j++;
 			}
