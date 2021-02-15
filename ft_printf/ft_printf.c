@@ -98,7 +98,7 @@ int		ft_printf(char	*fromat, ...)
 				ct = p_range;
 			if (precision && !p_range && (fromat[pos] == 's' || !num))
 				ct = 0;
-			space = width - zero - ct;
+			space = width - zero - ct - neg;
 			while (space-- > 0)
 			{
 				write(1, " ", 1);

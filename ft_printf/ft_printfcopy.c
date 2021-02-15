@@ -97,7 +97,7 @@ int	ft_printf(char *format, ...)
 				cont = punto_range;
 			if (punto && !punto_range && (format[pos] == 's' || !num))
 				cont = 0;
-			esp = width - zero - cont;
+			esp = width - zero - cont - negativo;
 			while (esp-- > 0)
 			{
 				write(1, " ", 1);
